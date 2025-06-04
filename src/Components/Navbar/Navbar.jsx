@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { CiMenuFries } from "react-icons/ci";
 import { FaArrowDown } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,23 +34,25 @@ const Navbar = () => {
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
     { name: "Services", href: "#services", hasDropdown: true },
-    { name: "Portfolio", href: "#portfolio" },
+    { name: "Blog", href: "#blog" },
     { name: "Contact", href: "#contact" },
   ];
 
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-          isScrolled ? "bg-white shadow-lg backdrop-blur-sm" : "bg-transparent"
+        className={`fixed h-[10vh] flex items-center justify-center top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+          isScrolled
+            ? "bg-white shadow-lg backdrop-blur-sm"
+            : "bg-transparent border-b border-[#FFFFFF] border-dotted"
         } ${
           scrollDirection === "down" && isScrolled
             ? "transform -translate-y-full"
             : "transform translate-y-0"
         }`}
       >
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="w-full mx-auto px-8">
+          <div className="container flex items-center justify-between h-full p-4 lg:h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
               <a
@@ -68,7 +72,7 @@ const Navbar = () => {
                   <div key={item.name} className="relative group">
                     <a
                       href={item.href}
-                      className={`px-3 py-2 text-sm font-medium transition-colors duration-300 flex items-center hover:scale-105 transform ${
+                      className={`px-3 py-2 text-xl font-medium transition-colors duration-300 flex items-center hover:scale-105 transform ${
                         isScrolled
                           ? "text-gray-700 hover:text-blue-600"
                           : "text-white hover:text-blue-200"
@@ -114,19 +118,6 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:block">
-              <button
-                className={`px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
-                  isScrolled
-                    ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md"
-                    : "bg-white text-blue-600 hover:bg-blue-50"
-                }`}
-              >
-                Get Started
-              </button>
-            </div>
-
             {/* Mobile menu button */}
             <div className="lg:hidden">
               <button
@@ -137,26 +128,26 @@ const Navbar = () => {
                     : "text-white hover:text-blue-200"
                 }`}
               >
-                {isMobileMenuOpen
-                  ? //   <X className="h-6 w-6" />
-                    "X"
-                  : //   <Menu className="h-6 w-6" />
-                    "menu"}
+                {isMobileMenuOpen ? (
+                  <MdClose className="h-6 w-6" />
+                ) : (
+                  <CiMenuFries className="h-6 w-6" />
+                )}
               </button>
             </div>
           </div>
 
           {/* Mobile Navigation */}
           <div
-            className={`lg:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-              isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            className={`lg:hidden  transition-all duration-300 ease-in-out overflow-hidden ${
+              isMobileMenuOpen
+                ? "absolute top-[10vh] left-0 w-full opacity-100"
+                : "max-h-0 opacity-0"
             }`}
           >
             <div
               className={`px-2 pt-2 pb-3 space-y-1 ${
-                isScrolled
-                  ? "bg-white"
-                  : "bg-black bg-opacity-20 backdrop-blur-sm"
+                isScrolled ? "bg-white" : "bg-[#00000040]"
               }`}
             >
               {navItems.map((item) => (
@@ -173,16 +164,6 @@ const Navbar = () => {
                   {item.name}
                 </a>
               ))}
-              <button
-                className={`w-full mt-4 px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                  isScrolled
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "bg-white text-blue-600 hover:bg-blue-50"
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Get Started
-              </button>
             </div>
           </div>
         </div>
