@@ -41,10 +41,10 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed h-[10vh] flex items-center justify-center top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+        className={`fixed  flex items-center justify-center top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
           isScrolled
-            ? "bg-white shadow-lg backdrop-blur-sm"
-            : "bg-transparent border-b border-[#FFFFFF] border-dotted"
+            ? "h-[8vh] bg-white shadow-lg backdrop-blur-sm"
+            : "h-[10vh] bg-transparent border-b border-[#FFFFFF] border-dotted"
         } ${
           scrollDirection === "down" && isScrolled
             ? "transform -translate-y-full"

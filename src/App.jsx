@@ -1,4 +1,5 @@
 import "./App.css";
+import Feature from "./Components/Feature/Feature";
 import Home from "./Components/Home/Home";
 import Navbar from "./Components/Navbar/Navbar";
 
@@ -7,14 +8,7 @@ function App() {
     <>
       <Navbar />
       <Home />
-      {/* <div className="h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center text-white">
-        <div className="text-center">
-          <h1 className="text-6xl font-bold mb-4">Hero Section</h1>
-          <p className="text-xl opacity-90">
-            Scroll down to see the navbar transition
-          </p>
-        </div>
-      </div> */}
+      <Feature />
       <div className="bg-gray-50">
         {["About", "Services", "Portfolio", "Contact"].map((section) => (
           <div
