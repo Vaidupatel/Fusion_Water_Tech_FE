@@ -55,7 +55,7 @@ const About = () => {
           </div>
         </div>
         <div>
-          <button className="py-4 px-10 text-[#FFFFFF] bg-blue-800 hover:bg-[#00D1F9] rounded-4xl text-[16px]">
+          <button className="py-4 px-10 text-[#FFFFFF] bg-blue-800 hover:bg-[#00D1F9] rounded-4xl text-[16px] cursor-pointer transition-colors duration-300">
             Read More
           </button>
         </div>
