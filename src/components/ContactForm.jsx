@@ -47,6 +47,7 @@ const ContactForm = () => {
           "Error occuring during submitting response please contact help center or try again latter",
           "error"
         );
+        setIsLoading(false);
       });
   };
 
