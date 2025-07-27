@@ -1,16 +1,26 @@
-import "./App.css";
-import About from "./Components/About/About";
-import Feature from "./Components/Feature/Feature";
-import Home from "./Components/Home/Home";
-import Navbar from "./Components/Navbar/Navbar";
+import { useEffect } from "react";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
+  useEffect(() => {
+    const smoothScrollTo = (element) => {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    };
+
+    if (window.location.hash) {
+      const element = document.querySelector(window.location.hash);
+      if (element) {
+        setTimeout(() => smoothScrollTo(element), 100);
+      }
+    }
+  }, []);
+
   return (
     <>
-      <Navbar />
-      <Home />
-      <Feature />
-      <About />
+      <AppRoutes />
     </>
   );
 }
