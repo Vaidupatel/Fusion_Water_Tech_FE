@@ -59,6 +59,7 @@ export default function EditCustomer() {
       address: "",
       customerType: null,
       product: null,
+      servicePeriodDays: 0,
     },
   });
 
@@ -75,6 +76,7 @@ export default function EditCustomer() {
       product:
         products.find((prod) => prod._id === customerData?.product?._id) ||
         null,
+      servicePeriodDays: customerData?.servicePeriodDays || 0,
     });
   }, [customerData, customerTypes, products]);
 
@@ -249,6 +251,25 @@ export default function EditCustomer() {
                   sx={inputStyles}
                 />
               )}
+            />
+          )}
+        />
+
+        {/* Service Period Days Field */}
+        <Controller
+          name="servicePeriodDays"
+          control={control}
+          rules={{
+            required: "Service Period Days is required",
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Service Period"
+              fullWidth
+              error={!!errors.servicePeriodDays}
+              helperText={errors.servicePeriodDays?.message}
+              sx={inputStyles}
             />
           )}
         />

@@ -35,7 +35,6 @@ export default function AppRoutes() {
             <Route path="customers/new" element={<CreateCustomer />} />
             <Route path="customers/:id" element={<EditCustomer />} />
             <Route path="customers/:id/details" element={<CustomerDetails />} />
-            {/* <Route path="customers/:id" element={<CustomerForm />} /> */}
             <Route path="due-services" element={<DueServices />} />
             <Route path="customer-type" element={<CustomerTypeList />} />
             <Route path="customer-type/new" element={<CreateCustomerType />} />

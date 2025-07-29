@@ -1,19 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "../../context/SnackbarContext";
 import { useAdminLogin } from "../../lib/hooks/admin/adminLogin.js";
 import { useToken } from "../../lib/utils/auth.js";
 import { useTheme } from "../../context/ThemeContext.jsx";
+import { CircularProgress } from "@mui/material";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(true);
   const { theme } = useTheme();
-  const { mutate, isLoading } = useAdminLogin();
+  const { mutate, isPending } = useAdminLogin();
   const { showSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { setToken } = useToken();
 
   const isDark = theme === "dark";
+
+  useEffect(() => {
+    setIsLoading(isPending);
+  }, [isPending]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -86,7 +92,14 @@ export default function Login() {
                 : "bg-indigo-600 text-white hover:bg-indigo-700"
             }`}
           >
-            {isLoading ? "Logging in…" : "Login"}
+            {isLoading ? (
+              <span className="flex flex-row items-center justify-center gap-8">
+                <p>Logging in…</p>
+                <CircularProgress color="inherit" size={25} />
+              </span>
+            ) : (
+              <span>Login</span>
+            )}
           </button>
         </div>
       </form>
