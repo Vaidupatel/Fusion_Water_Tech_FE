@@ -57,11 +57,11 @@ export default function CustomerDetails() {
     <div
       className={`${
         isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-      } p-4`}
+      } h-full p-4 rounded-2xl`}
     >
       <h2 className="text-2xl font-bold mb-6">Customer Details</h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+      {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
         <LabelValue label="Name" value={customer.name} />
         <LabelValue label="Mobile" value={customer.mobilePrimary} />
         <LabelValue label="Secondary Mobile" value={customer.mobileSecondary} />
@@ -92,22 +92,81 @@ export default function CustomerDetails() {
           label="Total Cost"
           value={`₹${(customer.totalCost || 0).toFixed(2)}`}
         />
+      </div> */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+        <LabelValue label="Name" value={customer.name} />
+        <LabelValue label="Mobile" value={customer.mobilePrimary} />
+        <LabelValue label="Secondary Mobile" value={customer.mobileSecondary} />
+        <LabelValue label="Address" value={customer.address} />
+        <LabelValue label="Customer Type" value={customer.customerType?.name} />
+        <LabelValue label="Product" value={customer.product?.name} />
+        <LabelValue label="Product Details" value={customer.productDetails} />
+        <LabelValue label="Refer By" value={customer.referBy} />
+        <LabelValue label="Install By" value={customer.installBy} />
+        <LabelValue
+          label="Install Date"
+          value={dayjs(customer.installDate).format("DD-MM-YYYY")}
+        />
+        <LabelValue label="Staff" value={customer.staff} />
+        <LabelValue label="Raw Water TDS" value={customer.rawWaterTDS} />
+        <LabelValue label="Warranty" value={`${customer.warranty} days`} />
+        <LabelValue
+          label="Rent"
+          value={`₹${(customer.rent || 0).toFixed(2)}`}
+        />
+        <LabelValue
+          label="Deposit"
+          value={`₹${(customer.deposit || 0).toFixed(2)}`}
+        />
+        <LabelValue
+          label="Installation Cost"
+          value={`₹${(customer.installationCost || 0).toFixed(2)}`}
+        />
+        <LabelValue
+          label="Service Period"
+          value={`${customer.servicePeriodDays} days`}
+        />
+        <LabelValue
+          label="Date of Sale"
+          value={dayjs(customer.dateOfSale).format("DD-MM-YYYY")}
+        />
+        <LabelValue
+          label="Last Service Date"
+          value={
+            customer.lastServiceDate
+              ? dayjs(customer.lastServiceDate).format("DD-MM-YYYY")
+              : "—"
+          }
+        />
+        <LabelValue
+          label="Total Cost"
+          value={`₹${(customer.totalCost || 0).toFixed(2)}`}
+        />
+        <LabelValue
+          label="Created At"
+          value={dayjs(customer.createdAt).format("DD-MM-YYYY")}
+        />
+        <LabelValue
+          label="Updated At"
+          value={dayjs(customer.updatedAt).format("DD-MM-YYYY")}
+        />
       </div>
 
       <h3 className="text-xl font-semibold mt-8 mb-4">Service History</h3>
 
       {history?.length > 0 ? (
-        <div className="overflow-x-auto border rounded-md">
+        <div className="overflow-x-auto rounded-md">
           <table className="min-w-full text-sm">
             <thead
               className={`${
                 isDark
                   ? "bg-gray-800 text-gray-300"
-                  : "bg-gray-100 text-gray-700"
+                  : "bg-gray-200 text-gray-700"
               }`}
             >
               <tr>
                 <th className="p-3 text-left">Date</th>
+                <th className="p-3 text-left">Type</th>
                 <th className="p-3 text-left">Technician</th>
                 <th className="p-3 text-left">Cost</th>
                 <th className="p-3 text-left">Notes</th>
@@ -118,12 +177,15 @@ export default function CustomerDetails() {
                 <tr
                   key={entry._id}
                   className={`border-t ${
-                    isDark ? "border-gray-700" : "border-gray-200"
-                  } hover:bg-indigo-50`}
+                    isDark
+                      ? "border-gray-700 hover:bg-gray-800"
+                      : "border-gray-200 hover:bg-gray-200"
+                  }`}
                 >
                   <td className="p-3">
                     {dayjs(entry.serviceDate).format("DD-MM-YYYY")}
                   </td>
+                  <td className="p-3 capitalize">{entry.serviceType}</td>
                   <td className="p-3">{entry.technician}</td>
                   <td className="p-3">₹{entry.cost.toFixed(2)}</td>
                   <td className="p-3">{entry.notes || "—"}</td>

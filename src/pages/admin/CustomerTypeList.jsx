@@ -53,9 +53,9 @@ export default function CustomerTypeList() {
 
   return (
     <div
-      className={`p-4 min-h-screen ${
+      className={`p-4 h-full ${
         isDark ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
-      }`}
+      } rounded-2xl`}
     >
       <div className="flex justify-between mb-4">
         <h1 className="text-2xl font-bold">Customer Types</h1>

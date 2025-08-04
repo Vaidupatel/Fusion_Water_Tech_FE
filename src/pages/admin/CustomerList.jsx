@@ -56,7 +56,7 @@ export default function CustomerList() {
     <div
       className={`${
         isDark ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"
-      } h-full p-4`}
+      } h-full p-4 rounded-2xl`}
     >
       <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center mb-4">
         <h1 className="text-2xl font-semibold">Customers</h1>
@@ -87,7 +87,7 @@ export default function CustomerList() {
         <div className="overflow-x-auto">
           <div
             className={`hidden md:grid md:grid-cols-8 gap-2 px-4 py-2 font-medium border-b ${
-              isDark ? "bg-gray-800" : "bg-gray-100"
+              isDark ? "bg-gray-800 text-gray-300" : "bg-gray-200 text-gray-700"
             }`}
           >
             <div>Name</div>
@@ -103,40 +103,49 @@ export default function CustomerList() {
           {customers.map((c) => (
             <div
               key={c._id}
-              className={`grid grid-cols-1 md:grid-cols-8 gap-2 p-4 border-b hover:${
-                isDark ? "bg-gray-700" : "bg-gray-50"
+              className={`grid grid-cols-1 md:grid-cols-8 gap-2 p-4 border-b ${
+                isDark
+                  ? "border-gray-700 hover:bg-gray-800"
+                  : "border-gray-200 hover:bg-gray-200"
               }`}
             >
               <div>
                 <span className="md:hidden font-semibold">Name: </span>
                 {c.name}
               </div>
+
               <div>
                 <span className="md:hidden font-semibold">Mobile: </span>
                 {c.mobilePrimary}
               </div>
+
               <div>
                 <span className="md:hidden font-semibold">Type: </span>
                 {c.customerType?.name}
               </div>
+
               <div>
                 <span className="md:hidden font-semibold">Deposit: </span>₹
                 {c.deposit.toFixed(2)}
               </div>
+
               <div>
                 <span className="md:hidden font-semibold">
                   Service Period:{" "}
                 </span>
                 {c.servicePeriodDays} d
               </div>
+
               <div>
                 <span className="md:hidden font-semibold">Date of Sale: </span>
                 {dayjs(c.dateOfSale).format("DD-MM-YYYY")}
               </div>
+
               <div>
                 <span className="md:hidden font-semibold">Total Cost: </span>₹
                 {(c.totalCost || 0).toFixed(2)}
               </div>
+
               <div className="flex space-x-2 justify-start md:justify-center">
                 <ButtonGroup variant="outlined">
                   <Button

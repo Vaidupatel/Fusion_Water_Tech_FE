@@ -60,7 +60,7 @@ export default function EditCustomerType() {
 
   return (
     <div
-      className={`flex-1 p-6 rounded-xl shadow-md ${
+      className={`flex-1 p-6 rounded-2xl shadow-md ${
         isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >

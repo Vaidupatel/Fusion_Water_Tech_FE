@@ -37,6 +37,13 @@ export default function CreateCustomer() {
       warranty: 0,
       deposit: 0,
       servicePeriodDays: 0,
+      rent: 0,
+      installDate: dayjs().format("YYYY-MM-DD"),
+      installationCost: 0,
+      installBy: "",
+      referBy: "",
+      staff: 0,
+      rawWaterTDS: 0,
     },
   });
 
@@ -99,7 +106,7 @@ export default function CreateCustomer() {
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-4"
       >
-        {/* Each field inside grid */}
+        {/* Name */}
         <Controller
           name="name"
           control={control}
@@ -116,41 +123,7 @@ export default function CreateCustomer() {
           )}
         />
 
-        <Controller
-          name="mobilePrimary"
-          control={control}
-          rules={{
-            required: "Primary mobile is required",
-            pattern: {
-              value: /^[0-9]{10}$/,
-              message: "Enter valid 10-digit number",
-            },
-          }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Primary Mobile"
-              fullWidth
-              error={!!errors.mobilePrimary}
-              helperText={errors.mobilePrimary?.message}
-              sx={inputStyles}
-            />
-          )}
-        />
-
-        <Controller
-          name="mobileSecondary"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Secondary Mobile"
-              fullWidth
-              sx={inputStyles}
-            />
-          )}
-        />
-
+        {/* Address */}
         <Controller
           name="address"
           control={control}
@@ -169,6 +142,51 @@ export default function CreateCustomer() {
           )}
         />
 
+        {/* Primary Mobile */}
+        <Controller
+          name="mobilePrimary"
+          control={control}
+          rules={{
+            required: "Primary mobile is required",
+            pattern: {
+              value: /^[0-9]{10}$/,
+              message: "Enter a valid 10-digit number",
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Primary Mobile"
+              fullWidth
+              error={!!errors.mobilePrimary}
+              helperText={errors.mobilePrimary?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Secondary Mobile */}
+        <Controller
+          name="mobileSecondary"
+          control={control}
+          rules={{
+            pattern: {
+              value: /^[0-9]{10}$/,
+              message: "Enter a valid 10-digit number",
+            },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Secondary Mobile"
+              helperText={errors.mobileSecondary?.message}
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Customer Type */}
         <Controller
           name="customerType"
           control={control}
@@ -176,7 +194,7 @@ export default function CreateCustomer() {
           render={({ field }) => (
             <Autocomplete
               options={customerTypes}
-              getOptionLabel={(option) => option?.name || ""}
+              getOptionLabel={(opt) => opt.name}
               onChange={(_, value) => field.onChange(value)}
               value={field.value}
               renderInput={(params) => (
@@ -192,6 +210,7 @@ export default function CreateCustomer() {
           )}
         />
 
+        {/* Product */}
         <Controller
           name="product"
           control={control}
@@ -199,7 +218,7 @@ export default function CreateCustomer() {
           render={({ field }) => (
             <Autocomplete
               options={products}
-              getOptionLabel={(option) => option?.name || ""}
+              getOptionLabel={(opt) => opt.name}
               onChange={(_, value) => field.onChange(value)}
               value={field.value}
               renderInput={(params) => (
@@ -215,6 +234,7 @@ export default function CreateCustomer() {
           )}
         />
 
+        {/* Product Details */}
         <Controller
           name="productDetails"
           control={control}
@@ -228,6 +248,111 @@ export default function CreateCustomer() {
           )}
         />
 
+        {/* Rent */}
+        <Controller
+          name="rent"
+          control={control}
+          rules={{
+            min: { value: 0, message: "Rent must be ≥ 0" },
+            valueAsNumber: true,
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Rent (₹)"
+              type="number"
+              fullWidth
+              error={!!errors.rent}
+              helperText={errors.rent?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Staff */}
+        <Controller
+          name="staff"
+          control={control}
+          rules={{
+            min: { value: 0, message: "Staff must be ≥ 0" },
+            valueAsNumber: true,
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Number of Staff"
+              type="number"
+              fullWidth
+              error={!!errors.staff}
+              helperText={errors.staff?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Raw Water TDS */}
+        <Controller
+          name="rawWaterTDS"
+          control={control}
+          rules={{
+            min: { value: 0, message: "Raw Water TDS must be ≥ 0" },
+            valueAsNumber: true,
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Raw Water TDS"
+              type="number"
+              fullWidth
+              error={!!errors.rawWaterTDS}
+              helperText={errors.rawWaterTDS?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Warranty */}
+        <Controller
+          name="warranty"
+          control={control}
+          rules={{
+            min: { value: 0, message: "Warranty must be ≥ 0" },
+            valueAsNumber: true,
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Warranty (days)"
+              type="number"
+              fullWidth
+              error={!!errors.warranty}
+              helperText={errors.warranty?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Service Period */}
+        <Controller
+          name="servicePeriodDays"
+          control={control}
+          rules={{
+            min: { value: 0, message: "Service Period must be ≥ 0" },
+          }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Service Period (days)"
+              type="number"
+              fullWidth
+              error={!!errors.servicePeriodDays}
+              helperText={errors.servicePeriodDays?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Date of Sale */}
         <Controller
           name="dateOfSale"
           control={control}
@@ -246,25 +371,26 @@ export default function CreateCustomer() {
           )}
         />
 
+        {/* Install Date */}
         <Controller
-          name="warranty"
+          name="installDate"
           control={control}
-          rules={{
-            min: { value: 0, message: "Warranty must be ≥ 0" },
-          }}
+          rules={{ required: "Install Date is required" }}
           render={({ field }) => (
             <TextField
               {...field}
-              label="Warranty (days)"
-              type="number"
+              label="Install Date"
+              type="date"
               fullWidth
-              error={!!errors.warranty}
-              helperText={errors.warranty?.message}
+              InputLabelProps={{ shrink: true }}
+              error={!!errors.installDate}
+              helperText={errors.installDate?.message}
               sx={inputStyles}
             />
           )}
         />
 
+        {/* Deposit */}
         <Controller
           name="deposit"
           control={control}
@@ -284,42 +410,75 @@ export default function CreateCustomer() {
           )}
         />
 
+        {/* Installation Cost */}
         <Controller
-          name="servicePeriodDays"
+          name="installationCost"
           control={control}
           rules={{
-            min: { value: 0, message: "Service period must be ≥ 0" },
+            min: { value: 0, message: "Installation Cost must be ≥ 0" },
           }}
           render={({ field }) => (
             <TextField
               {...field}
-              label="Service Period (days)"
+              label="Installation Cost (₹)"
               type="number"
               fullWidth
-              error={!!errors.servicePeriodDays}
-              helperText={errors.servicePeriodDays?.message}
+              error={!!errors.installationCost}
+              helperText={errors.installationCost?.message}
               sx={inputStyles}
             />
           )}
         />
 
-        {/* Full-width on both columns */}
-        <div className="col-span-1 md:col-span-2 flex justify-end gap-3">
+        {/* Refer By */}
+        <Controller
+          name="referBy"
+          control={control}
+          rules={{ required: "Refer By is required" }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Refer By"
+              fullWidth
+              error={!!errors.referBy}
+              helperText={errors.referBy?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Install By */}
+        <Controller
+          name="installBy"
+          control={control}
+          rules={{ required: "Install By is required" }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Install By"
+              fullWidth
+              error={!!errors.installBy}
+              helperText={errors.installBy?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Action Buttons (full width) */}
+        <div className="col-span-1 md:col-span-2 flex justify-end gap-3 mt-4">
           <Button onClick={() => navigate(-1)} color="inherit">
             Cancel
           </Button>
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             disabled={isSubmitting || isPending}
             startIcon={!isSubmitting && !isPending && <FaSave />}
           >
-            {isSubmitting || isPending ? (
+            {(isSubmitting || isPending) && (
               <CircularProgress size={20} color="inherit" />
-            ) : (
-              "Create"
             )}
+            {!(isSubmitting || isPending) && "Create"}
           </Button>
         </div>
       </form>

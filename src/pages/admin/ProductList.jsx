@@ -50,7 +50,7 @@ export default function ProductList() {
     <div
       className={`h-full p-4 ${
         isDark ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"
-      }`}
+      } rounded-2xl`}
     >
       <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center mb-4">
         <h1 className="text-2xl font-semibold">Products</h1>

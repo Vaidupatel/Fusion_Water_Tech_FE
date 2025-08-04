@@ -14,7 +14,7 @@ export default function AdminLayout() {
     <ProtectedRoute redirectPath="/admin/login">
       <div
         className={`flex h-screen  ${
-          theme === "dark" ? "bg-gray-900" : "bg-gray-50"
+          theme === "dark" ? "bg-gray-800" : "bg-gray-200"
         } `}
       >
         <Sidebar collapsed={collapsed} toggleCollapse={toggleCollapse} />

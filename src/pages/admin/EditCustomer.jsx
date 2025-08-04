@@ -56,10 +56,22 @@ export default function EditCustomer() {
     defaultValues: {
       name: "",
       mobilePrimary: "",
+      mobileSecondary: "",
       address: "",
       customerType: null,
       product: null,
       servicePeriodDays: 0,
+      rent: 0,
+      installDate: new Date(),
+      installationCost: 0,
+      installBy: "",
+      referBy: "",
+      staff: 0,
+      rawWaterTDS: 0,
+      productDetails: "",
+      dateOfSale: new Date(),
+      warranty: 0,
+      deposit: 0,
     },
   });
 
@@ -68,6 +80,7 @@ export default function EditCustomer() {
     reset({
       name: customerData.name || "",
       mobilePrimary: customerData.mobilePrimary || "",
+      mobileSecondary: customerData.mobileSecondary || "",
       address: customerData.address || "",
       customerType:
         customerTypes.find(
@@ -77,6 +90,21 @@ export default function EditCustomer() {
         products.find((prod) => prod._id === customerData?.product?._id) ||
         null,
       servicePeriodDays: customerData?.servicePeriodDays || 0,
+      rent: customerData?.rent || 0,
+      installDate: customerData?.installDate
+        ? customerData.installDate.slice(0, 10)
+        : new Date().toISOString().slice(0, 10),
+      installationCost: customerData?.installationCost || 0,
+      installBy: customerData?.installBy || "",
+      referBy: customerData?.referBy || "",
+      staff: customerData?.staff || 0,
+      rawWaterTDS: customerData?.rawWaterTDS || 0,
+      productDetails: customerData?.productDetails || "",
+      dateOfSale: customerData?.dateOfSale
+        ? customerData.dateOfSale.slice(0, 10)
+        : new Date().toISOString().slice(0, 10),
+      warranty: customerData?.warranty || 0,
+      deposit: customerData?.deposit || 0,
     });
   }, [customerData, customerTypes, products]);
 
@@ -86,6 +114,8 @@ export default function EditCustomer() {
         id,
         body: {
           ...formData,
+          installDate: new Date(formData.installDate).toISOString(),
+          dateOfSale: new Date(formData.dateOfSale).toISOString(),
           customerType: formData.customerType?._id,
           product: formData.product?._id,
         },
@@ -150,7 +180,10 @@ export default function EditCustomer() {
         <h1 className="text-2xl font-bold">Edit Customer</h1>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
         {/* Name Field */}
         <Controller
           name="name"
@@ -168,7 +201,23 @@ export default function EditCustomer() {
           )}
         />
 
-        {/* Mobile Field */}
+        {/* Address Field */}
+        <Controller
+          name="address"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Address"
+              multiline
+              rows={3}
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Primary Mobile */}
         <Controller
           name="mobilePrimary"
           control={control}
@@ -191,23 +240,29 @@ export default function EditCustomer() {
           )}
         />
 
-        {/* Address Field */}
+        {/* Secondary Mobile */}
         <Controller
-          name="address"
+          name="mobileSecondary"
           control={control}
+          rules={{
+            pattern: {
+              value: /^[0-9]{10}$/,
+              message: "Enter a valid 10-digit number",
+            },
+          }}
           render={({ field }) => (
             <TextField
               {...field}
-              label="Address"
-              multiline
-              rows={3}
+              label="Secondary Mobile"
               fullWidth
+              error={!!errors.mobileSecondary}
+              helperText={errors.mobileSecondary?.message}
               sx={inputStyles}
             />
           )}
         />
 
-        {/* Customer Type Autocomplete */}
+        {/* Customer Type */}
         <Controller
           name="customerType"
           control={control}
@@ -231,7 +286,7 @@ export default function EditCustomer() {
           )}
         />
 
-        {/* Product Autocomplete */}
+        {/* Product */}
         <Controller
           name="product"
           control={control}
@@ -255,7 +310,84 @@ export default function EditCustomer() {
           )}
         />
 
-        {/* Service Period Days Field */}
+        {/* Product Details */}
+        <Controller
+          name="productDetails"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Product Details"
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Rent */}
+        <Controller
+          name="rent"
+          control={control}
+          rules={{ required: "Rent is required" }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Rent (₹)"
+              fullWidth
+              error={!!errors.rent}
+              helperText={errors.rent?.message}
+              sx={inputStyles}
+              type="number"
+            />
+          )}
+        />
+
+        {/* Staff */}
+        <Controller
+          name="staff"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Staff Count"
+              type="number"
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Raw Water TDS */}
+        <Controller
+          name="rawWaterTDS"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Raw Water TDS"
+              type="number"
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Warranty */}
+        <Controller
+          name="warranty"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Warranty (in days)"
+              type="number"
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Service Period Days */}
         <Controller
           name="servicePeriodDays"
           control={control}
@@ -274,8 +406,107 @@ export default function EditCustomer() {
           )}
         />
 
+        {/* Date of Sale */}
+        <Controller
+          name="dateOfSale"
+          control={control}
+          rules={{ required: "Date of sale is required" }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Date of Sale"
+              type="date"
+              fullWidth
+              error={!!errors.dateOfSale}
+              helperText={errors.dateOfSale?.message}
+              sx={inputStyles}
+              InputLabelProps={{ shrink: true }}
+            />
+          )}
+        />
+
+        {/* Install Date */}
+        <Controller
+          name="installDate"
+          control={control}
+          rules={{ required: "Install date is required" }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Install Date"
+              type="date"
+              fullWidth
+              error={!!errors.installDate}
+              helperText={errors.installDate?.message}
+              sx={inputStyles}
+              InputLabelProps={{ shrink: true }}
+            />
+          )}
+        />
+
+        {/* Deposit */}
+        <Controller
+          name="deposit"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Deposit (₹)"
+              type="number"
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Installation Cost */}
+        <Controller
+          name="installationCost"
+          control={control}
+          rules={{ required: "Installation cost is required" }}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Installation Cost (₹)"
+              fullWidth
+              type="number"
+              error={!!errors.installationCost}
+              helperText={errors.installationCost?.message}
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Refer By */}
+        <Controller
+          name="referBy"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Referred By"
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
+        {/* Install By */}
+        <Controller
+          name="installBy"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Installed By"
+              fullWidth
+              sx={inputStyles}
+            />
+          )}
+        />
+
         {/* Action Buttons */}
-        <div className="flex justify-end gap-3">
+        <div className="col-span-1 md:col-span-2 flex justify-end gap-3 mt-4">
           <Button onClick={() => navigate(-1)} color="inherit">
             Cancel
           </Button>

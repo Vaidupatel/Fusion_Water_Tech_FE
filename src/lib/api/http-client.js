@@ -63,7 +63,6 @@ export class HttpClient {
 
     static async post(url, data, options) {
         const response = await Axios.post(url, data, options);
-        console.log('response :>> ', response);
         return response.data;
     }
 
